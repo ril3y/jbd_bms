@@ -13,6 +13,8 @@ iOS, macOS, Windows, Android and Linux.
 - Live protection flags with readable labels
 - Battery-life data: cycle count, production date, hardware/software version,
   lifetime protection-event counters, design vs. full-charge capacity
+- History building blocks: sample logging, charge/discharge session detection,
+  cycle and protection-event detection (JSON-serializable, storage-agnostic)
 - Robust frame reassembly (length-based, checksum-validated) and serialized requests
 - Pure-Dart protocol layer you can unit-test without hardware
 
@@ -35,6 +37,21 @@ print('${health.cycles} cycles, SOH ${health.stateOfHealth}');
 bms.basicInfo.listen((i) => print('${i.voltage} V  ${i.current} A  ${i.soc}%'));
 bms.cellVoltages.listen(print);
 bms.startPolling();
+```
+
+### History
+
+JBD boards keep **no event log or charge history**, only lifetime totals (cycle
+count, protection counters). Build your own from live data:
+
+```dart
+final sessions = SessionTracker();
+final events = EventDetector();
+bms.basicInfo.listen((info) {
+  final sample = BmsSample.from(info);
+  final done = sessions.add(sample);   // non-null when a charge/discharge ends
+  final found = events.onSample(sample); // cycles, protection raised/cleared
+});
 ```
 
 ### Platform setup

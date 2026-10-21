@@ -1,3 +1,10 @@
+## 0.2.0
+
+* History building blocks (the BMS itself keeps no log): `BmsSample`,
+  `SessionTracker` (charge/discharge sessions with Ah, Wh, SOC, peak current,
+  temperature, cell spread), `EventDetector` (cycle increments, protection
+  flags raised/cleared, protection-counter deltas), all JSON-serializable.
+
 ## 0.1.0
 
 * Initial release: JBD BMS frame building, chunk reassembly, checksum validation.

@@ -1,6 +1,6 @@
 name: jbd_bms
 description: BLE protocol and client for JBD smart BMS boards (LOSSIGY LiFePO4 batteries).
-version: 0.1.0
+version: 0.2.0
 repository: https://github.com/ril3y/jbd_bms
 topics: [bluetooth, ble, bms, battery, lifepo4]
 

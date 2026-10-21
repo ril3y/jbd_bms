@@ -86,6 +86,12 @@ mapping (inferred, not read from the LOSSIGY app's string table):
 
 ## Battery-life data
 
+**There is no history/event log on the BMS.** The complete command set used by the stock
+app is 0x00/0x01 (factory mode), 0x03, 0x04, 0x05, 0xA0, 0xA2, 0xAA, 0xFA (read/write),
+0xE1 (MOS control), 0x0A (balance toggle) and `FF AA` (BLE name); none returns history.
+Lifetime totals only: cycle count (0x03) and protection counters (0xAA).
+
+
 **0xAA protection counters:** `len` bytes of u16 lifetime event counts. The stock app has
 the read command but never calls or labels it. The library uses the standard JBD order
 (**unverified on LOSSIGY hardware**):
