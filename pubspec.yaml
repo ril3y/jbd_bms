@@ -1,0 +1,19 @@
+name: jbd_bms
+description: BLE protocol and client for JBD smart BMS boards (LOSSIGY LiFePO4 batteries).
+version: 0.1.0
+repository: https://github.com/ril3y/jbd_bms
+topics: [bluetooth, ble, bms, battery, lifepo4]
+
+environment:
+  sdk: ^3.13.5
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  universal_ble: ^3.1.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
