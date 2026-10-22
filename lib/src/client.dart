@@ -182,7 +182,21 @@ class JbdBmsClient {
   /// Gather everything useful for judging remaining battery life.
   /// Optional reads that the BMS doesn't support are left null / empty.
   Future<BatteryHealth> readHealth() async {
-    final info = await readBasicInfo();
+    // Some boards ignore the first command after notifications are enabled, so
+    // a read right after connecting can time out: retry once, then fall back
+    // to the last polled reply.
+    BasicInfo info;
+    try {
+      info = await readBasicInfo();
+    } on TimeoutException {
+      try {
+        info = await readBasicInfo();
+      } on TimeoutException {
+        final last = lastBasicInfo;
+        if (last == null) rethrow;
+        info = last;
+      }
+    }
 
     String? hw;
     try {
